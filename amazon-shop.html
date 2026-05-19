@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShopMax - オンラインショッピング</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: Arial, sans-serif; font-size: 14px; color: #0F1111; background: #EAEDED; }
+
+/* ========== HEADER ========== */
+#header {
+  background: #131921;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-main {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 10px;
+}
+.logo {
+  font-size: 22px;
+  font-weight: 900;
+  color: #FF9900;
+  white-space: nowrap;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  letter-spacing: -1px;
+}
+.logo:hover { border-color: #fff; border-radius: 2px; }
+
+.header-deliver {
+  display: flex;
+  flex-direction: column;
+  font-size: 11px;
+  color: #ccc;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.header-deliver:hover { border-color: #fff; border-radius: 2px; }
+.header-deliver strong { font-size: 13px; color: #fff; }
+
+.search-bar {
+  flex: 1;
+  display: flex;
+  height: 40px;
+}
+.search-category {
+  background: #f3f3f3;
+  border: none;
+  padding: 0 8px;
+  font-size: 12px;
+  color: #555;
+  border-radius: 4px 0 0 4px;
+  cursor: pointer;
+  border-right: 1px solid #ccc;
+}
+.search-input {
+  flex: 1;
+  border: none;
+  padding: 0 12px;
+  font-size: 15px;
+  outline: none;
+  color: #000;
+}
+.search-btn {
+  background: #FF9900;
+  border: none;
+  width: 45px;
+  cursor: pointer;
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-btn:hover { background: #FA8900; }
+.search-btn svg { width: 20px; height: 20px; }
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+.header-nav-item {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.header-nav-item:hover { border-color: #fff; border-radius: 2px; }
+.header-nav-item .line1 { font-size: 11px; color: #ccc; }
+.header-nav-item .line2 { font-size: 13px; font-weight: 700; color: #fff; }
+
+.cart-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  position: relative;
+}
+.cart-btn:hover { border-color: #fff; border-radius: 2px; }
+.cart-icon { font-size: 28px; }
+.cart-count {
+  position: absolute;
+  top: 2px; left: 24px;
+  background: #FF9900;
+  color: #131921;
+  font-size: 13px;
+  font-weight: 700;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.cart-label { font-size: 13px; font-weight: 700; color: #fff; }
+
+.nav-bar {
+  background: #232F3E;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  height: 38px;
+  gap: 2px;
+  overflow: hidden;
+}
+.nav-bar-item {
+  padding: 6px 10px;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+.nav-bar-item:hover { border-color: #fff; }
+.nav-bar-item.bold { font-weight: 700; }
+
+/* ========== HERO BANNER ========== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  height: 350px;
+  background: #131921;
+}
+.hero-slides { display: flex; height: 100%; transition: transform 0.5s ease; }
+.hero-slide {
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-slide-1 { background: linear-gradient(135deg, #0f3460 0%, #16213e 50%, #1a1a2e 100%); }
+.hero-slide-2 { background: linear-gradient(135deg, #1a0533 0%, #2d1057 50%, #0f1411 100%); }
+.hero-slide-3 { background: linear-gradient(135deg, #0d2137 0%, #1a4b6e 50%, #0f2027 100%); }
+
+.hero-content {
+  text-align: center;
+  color: #fff;
+  z-index: 2;
+  padding: 20px;
+}
+.hero-content .badge {
+  background: #FF9900;
+  color: #131921;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.hero-content h2 { font-size: 38px; font-weight: 900; margin-bottom: 8px; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+.hero-content p { font-size: 16px; color: #ddd; margin-bottom: 20px; }
+.hero-btn {
+  background: #FF9900;
+  color: #131921;
+  border: none;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.hero-btn:hover { background: #FA8900; }
+.hero-arrow {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  background: rgba(255,255,255,0.12);
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  width: 44px; height: 60px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.hero-arrow:hover { background: rgba(255,255,255,0.25); }
+.hero-arrow.left { left: 12px; }
+.hero-arrow.right { right: 12px; }
+.hero-dots {
+  position: absolute;
+  bottom: 12px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 6px; z-index: 10;
+}
+.hero-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,255,255,0.4); cursor: pointer; border: none;
+  transition: background 0.2s;
+}
+.hero-dot.active { background: #FF9900; }
+
+/* ========== MAIN CONTENT ========== */
+main { max-width: 1500px; margin: 0 auto; padding: 16px; }
+
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #0F1111;
+}
+
+/* ========== PRODUCT GRID ========== */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.product-card {
+  background: #fff;
+  border-radius: 4px;
+  padding: 14px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.product-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.18); }
+.product-badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: #CC0C39;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 2px;
+  z-index: 1;
+}
+.product-badge.new { background: #007185; }
+.product-badge.prime { background: #00A8E1; }
+.product-img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: contain;
+  margin-bottom: 10px;
+  font-size: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+.product-name {
+  font-size: 13px;
+  color: #0F1111;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.4;
+  flex: 1;
+}
+.product-brand {
+  font-size: 11px;
+  color: #565959;
+  margin-bottom: 4px;
+}
+.stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+.star-display { color: #FF9900; font-size: 14px; letter-spacing: -1px; }
+.review-count { font-size: 12px; color: #007185; cursor: pointer; }
+.review-count:hover { color: #C7511F; text-decoration: underline; }
+.price-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
+.price-symbol { font-size: 12px; color: #0F1111; vertical-align: top; }
+.price-main { font-size: 22px; font-weight: 400; color: #0F1111; }
+.price-fraction { font-size: 12px; color: #0F1111; vertical-align: top; }
+.price-original { font-size: 12px; color: #565959; text-decoration: line-through; }
+.discount-pct { font-size: 12px; color: #CC0C39; font-weight: 600; }
+.prime-badge {
+  color: #00A8E1;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.add-cart-btn {
+  background: #FFD814;
+  border: none;
+  border-radius: 20px;
+  padding: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: auto;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.add-cart-btn:hover { background: #F7CA00; }
+.add-cart-btn.added { background: #c8e6c9; color: #2e7d32; }
+
+/* ========== BANNER STRIP ========== */
+.banner-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.banner-card {
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+.banner-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.18); }
+.banner-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.banner-card-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+  border-radius: 4px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+}
+.see-more { color: #007185; font-size: 13px; cursor: pointer; }
+.see-more:hover { color: #C7511F; text-decoration: underline; }
+
+/* ========== FOOTER ========== */
+footer {
+  background: #232F3E;
+  color: #fff;
+  padding: 30px 0 0;
+  margin-top: 20px;
+}
+.footer-back-top {
+  background: #37475A;
+  text-align: center;
+  padding: 14px;
+  cursor: pointer;
+  font-size: 13px;
+  color: #fff;
+  margin-bottom: 24px;
+}
+.footer-back-top:hover { background: #485769; }
+.footer-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding: 0 24px 24px;
+}
+.footer-col h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+.footer-col a { display: block; color: #ccc; font-size: 13px; margin-bottom: 6px; cursor: pointer; text-decoration: none; }
+.footer-col a:hover { text-decoration: underline; }
+.footer-bottom {
+  background: #131921;
+  text-align: center;
+  padding: 16px;
+  color: #ccc;
+  font-size: 12px;
+}
+.footer-logo { font-size: 20px; font-weight: 900; color: #FF9900; margin-bottom: 4px; }
+
+/* ========== CART PANEL ========== */
+#cart-panel {
+  position: fixed;
+  top: 0; right: -400px;
+  width: 380px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -4px 0 20px rgba(0,0,0,0.2);
+  z-index: 200;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+#cart-panel.open { right: 0; }
+.cart-panel-header {
+  background: #232F3E;
+  color: #fff;
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+.cart-close { background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; }
+.cart-items { flex: 1; overflow-y: auto; padding: 12px; }
+.cart-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+.cart-item-img {
+  width: 64px; height: 64px;
+  font-size: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: #f5f5f5;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+.cart-item-info { flex: 1; }
+.cart-item-name { font-size: 13px; margin-bottom: 4px; }
+.cart-item-price { font-size: 15px; font-weight: 700; color: #B12704; }
+.cart-item-qty {
+  display: flex; align-items: center; gap: 8px; margin-top: 6px;
+}
+.qty-btn {
+  width: 24px; height: 24px;
+  border: 1px solid #999;
+  background: #f5f5f5;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.qty-btn:hover { background: #e0e0e0; }
+.qty-num { font-size: 14px; min-width: 20px; text-align: center; }
+.cart-item-remove { color: #007185; font-size: 12px; cursor: pointer; margin-top: 4px; }
+.cart-item-remove:hover { color: #C7511F; text-decoration: underline; }
+.cart-footer {
+  padding: 14px;
+  border-top: 2px solid #eee;
+}
+.cart-subtotal { font-size: 16px; margin-bottom: 12px; }
+.cart-subtotal span { font-weight: 700; color: #B12704; }
+.checkout-btn {
+  background: #FFD814;
+  border: none;
+  border-radius: 20px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+.checkout-btn:hover { background: #F7CA00; }
+.cart-empty { text-align: center; padding: 40px 20px; color: #888; }
+.cart-empty .empty-icon { font-size: 48px; margin-bottom: 12px; }
+
+#overlay-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 150;
+  display: none;
+}
+
+/* ========== TOAST ========== */
+#toast {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: #232F3E;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 300;
+  transform: translateY(80px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+#toast.show { transform: translateY(0); opacity: 1; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .banner-strip { grid-template-columns: repeat(2, 1fr); }
+  .header-deliver { display: none; }
+  .hero-content h2 { font-size: 26px; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .banner-strip { grid-template-columns: 1fr 1fr; }
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero { height: 220px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="header">
+  <div class="header-main">
+    <div class="logo">ShopMax</div>
+    <div class="header-deliver">
+      <span>お届け先</span>
+      <strong>&#128205; 東京都</strong>
+    </div>
+    <div class="search-bar">
+      <select class="search-category">
+        <option>すべて</option>
+        <option>電化製品</option>
+        <option>ファッション</option>
+        <option>本</option>
+        <option>食品</option>
+      </select>
+      <input class="search-input" type="text" placeholder="商品を検索...">
+      <button class="search-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#131921" stroke-width="2.5" stroke-linecap="round">
+          <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+    </div>
+    <div class="header-nav">
+      <div class="header-nav-item">
+        <span class="line1">こんにちは、</span>
+        <span class="line2">ログイン</span>
+      </div>
+      <div class="header-nav-item">
+        <span class="line1">返品・</span>
+        <span class="line2">注文履歴</span>
+      </div>
+    </div>
+    <div class="cart-btn" onclick="toggleCart()">
+      <span class="cart-icon">&#128722;</span>
+      <span class="cart-count" id="cart-count">0</span>
+      <span class="cart-label">カート</span>
+    </div>
+  </div>
+  <nav class="nav-bar">
+    <div class="nav-bar-item bold">&#9776; すべて</div>
+    <div class="nav-bar-item">今日のお得</div>
+    <div class="nav-bar-item">プライム</div>
+    <div class="nav-bar-item">電化製品</div>
+    <div class="nav-bar-item">ファッション</div>
+    <div class="nav-bar-item">食品・日用品</div>
+    <div class="nav-bar-item">本・音楽</div>
+    <div class="nav-bar-item">スポーツ</div>
+    <div class="nav-bar-item">おもちゃ</div>
+    <div class="nav-bar-item">カスタマーサービス</div>
+  </nav>
+</header>
+
+<!-- HERO BANNER -->
+<section class="hero">
+  <div class="hero-slides" id="hero-slides">
+    <div class="hero-slide hero-slide-1">
+      <div class="hero-content">
+        <div class="badge">&#9889; 期間限定セール</div>
+        <h2>最大50% OFF</h2>
+        <p>人気電化製品が特別価格で登場</p>
+        <button class="hero-btn">今すぐ購入</button>
+      </div>
+    </div>
+    <div class="hero-slide hero-slide-2">
+      <div class="hero-content">
+        <div class="badge">&#127381; 新着アイテム</div>
+        <h2>春コレクション</h2>
+        <p>最新ファッションが続々入荷中</p>
+        <button class="hero-btn">コレクションを見る</button>
+      </div>
+    </div>
+    <div class="hero-slide hero-slide-3">
+      <div class="hero-content">
+        <div class="badge">&#128666; 送料無料</div>
+        <h2>プライム会員</h2>
+        <p>全商品送料無料 + 限定特典</p>
+        <button class="hero-btn">今すぐ登録</button>
+      </div>
+    </div>
+  </div>
+  <button class="hero-arrow left" onclick="slide(-1)">&#8249;</button>
+  <button class="hero-arrow right" onclick="slide(1)">&#8250;</button>
+  <div class="hero-dots" id="hero-dots"></div>
+</section>
+
+<!-- MAIN -->
+<main>
+
+  <!-- CATEGORY BANNERS -->
+  <div class="banner-strip">
+    <div class="banner-card">
+      <h3>電化製品</h3>
+      <div class="banner-card-img">&#128187;</div>
+      <div class="see-more">すべて見る &rsaquo;</div>
+    </div>
+    <div class="banner-card">
+      <h3>ファッション</h3>
+      <div class="banner-card-img">&#128084;</div>
+      <div class="see-more">すべて見る &rsaquo;</div>
+    </div>
+    <div class="banner-card">
+      <h3>本・マンガ</h3>
+      <div class="banner-card-img">&#128218;</div>
+      <div class="see-more">すべて見る &rsaquo;</div>
+    </div>
+    <div class="banner-card">
+      <h3>食品・飲料</h3>
+      <div class="banner-card-img">&#127829;</div>
+      <div class="see-more">すべて見る &rsaquo;</div>
+    </div>
+  </div>
+
+  <!-- PRODUCT SECTION -->
+  <div class="section-title">おすすめ商品</div>
+  <div class="product-grid" id="product-grid"></div>
+
+  <div class="section-title">タイムセール中</div>
+  <div class="product-grid" id="sale-grid"></div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    ページトップへ戻る &#9650;
+  </div>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>ShopMaxについて</h4>
+      <a>会社情報</a>
+      <a>採用情報</a>
+      <a>プレスリリース</a>
+      <a>投資家情報</a>
+    </div>
+    <div class="footer-col">
+      <h4>お支払い・配送</h4>
+      <a>支払い方法</a>
+      <a>配送について</a>
+      <a>返品・交換</a>
+      <a>ギフトカード</a>
+    </div>
+    <div class="footer-col">
+      <h4>ヘルプ</h4>
+      <a>カスタマーサービス</a>
+      <a>注文状況を確認</a>
+      <a>アカウント管理</a>
+      <a>よくある質問</a>
+    </div>
+    <div class="footer-col">
+      <h4>ShopMaxでビジネス</h4>
+      <a>出品者として登録</a>
+      <a>広告掲載</a>
+      <a>アフィリエイト</a>
+      <a>法人向けサービス</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo">ShopMax</div>
+    <div>&copy; 2026 ShopMax, Inc. All rights reserved. | プライバシー | 利用規約 | Cookie設定</div>
+  </div>
+</footer>
+
+<!-- CART PANEL -->
+<div id="overlay-bg" onclick="toggleCart()"></div>
+<div id="cart-panel">
+  <div class="cart-panel-header">
+    <span>&#128722; カート</span>
+    <button class="cart-close" onclick="toggleCart()">&#10005;</button>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-footer" id="cart-footer" style="display:none">
+    <div class="cart-subtotal">小計: <span id="cart-total">¥0</span></div>
+    <button class="checkout-btn">&#128274; レジに進む</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ===== DATA =====
+const products = [
+  { id:1,  emoji:'&#128187;', name:'MacBook Air 13インチ M3チップ 8GBメモリ 256GB SSD', brand:'Apple', price:148800, original:168800, rating:4.8, reviews:2341, badge:'セール', prime:true },
+  { id:2,  emoji:'&#128241;', name:'iPhone 15 Pro 256GB ナチュラルチタニウム SIMフリー', brand:'Apple', price:159800, original:null, rating:4.9, reviews:5678, badge:'新着', prime:true },
+  { id:3,  emoji:'&#127911;', name:'Sony WH-1000XM5 ワイヤレスノイズキャンセリングヘッドホン', brand:'SONY', price:39600, original:49800, rating:4.7, reviews:1893, badge:'セール', prime:true },
+  { id:4,  emoji:'&#128247;', name:'Canon EOS R50 ミラーレス一眼カメラ RF-S18-45mm レンズキット', brand:'Canon', price:98000, original:109000, rating:4.6, reviews:892, badge:null, prime:true },
+  { id:5,  emoji:'&#129399;', name:'Kindle Paperwhite 第11世代 8GB 広告なし ブラック', brand:'Amazon', price:17980, original:19980, rating:4.5, reviews:4421, badge:'セール', prime:true },
+  { id:6,  emoji:'&#127897;', name:'Echo Dot 第5世代 スマートスピーカー Alexa搭載 チャコール', brand:'Amazon', price:5980, original:7480, rating:4.4, reviews:3210, badge:'セール', prime:true },
+  { id:7,  emoji:'&#128208;', name:'iPad Air 11インチ M2チップ Wi-Fi 128GB スターライト', brand:'Apple', price:98800, original:null, rating:4.8, reviews:1234, badge:'新着', prime:true },
+  { id:8,  emoji:'&#128377;', name:'Nintendo Switch OLED モデル ホワイト Joy-Con', brand:'Nintendo', price:36978, original:null, rating:4.9, reviews:8765, badge:null, prime:false },
+];
+
+const saleProducts = [
+  { id:9,  emoji:'&#128083;', name:'Anker PowerCore 26800mAh 大容量モバイルバッテリー USB-C対応', brand:'Anker', price:4780, original:6980, rating:4.6, reviews:12340, badge:'タイムセール', prime:true },
+  { id:10, emoji:'&#128526;', name:'Philips Hue スマート電球 E26 A60 フルカラー LED 60W相当', brand:'Philips', price:3980, original:5980, rating:4.3, reviews:2108, badge:'タイムセール', prime:true },
+  { id:11, emoji:'&#127939;', name:'Fitbit Charge 6 スマートウォッチ フィットネストラッカー ブラック', brand:'Fitbit', price:19800, original:24800, rating:4.5, reviews:3421, badge:'タイムセール', prime:true },
+  { id:12, emoji:'&#127968;', name:'iRobot Roomba j7+ ロボット掃除機 自動ゴミ収集', brand:'iRobot', price:79800, original:99800, rating:4.4, reviews:987, badge:'タイムセール', prime:true },
+];
+
+// ===== STATE =====
+let cart = [];
+
+// ===== STAR HELPER =====
+function stars(r) {
+  const full = Math.floor(r), half = r % 1 >= 0.5 ? 1 : 0;
+  return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(5 - full - half);
+}
+
+function formatPrice(p) {
+  return '¥' + p.toLocaleString();
+}
+
+// ===== RENDER PRODUCTS =====
+function renderGrid(containerId, items) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = items.map(p => {
+    const disc = p.original ? Math.round((1 - p.price / p.original) * 100) : 0;
+    const inCart = cart.some(c => c.id === p.id);
+    return `
+    <div class="product-card" onclick="addToCart(${p.id})">
+      ${p.badge ? `<div class="product-badge${p.badge==='新着'?' new':p.badge==='プライム'?' prime':''}">${p.badge}</div>` : ''}
+      <div class="product-img">${p.emoji}</div>
+      <div class="product-brand">${p.brand}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="stars">
+        <span class="star-display">${stars(p.rating)}</span>
+        <span class="review-count">${p.reviews.toLocaleString()}</span>
+      </div>
+      <div class="price-row">
+        <span class="price-symbol">¥</span>
+        <span class="price-main">${Math.floor(p.price/1).toLocaleString()}</span>
+      </div>
+      ${p.original ? `<div><span class="price-original">参考価格: ${formatPrice(p.original)}</span> <span class="discount-pct">-${disc}%</span></div>` : ''}
+      ${p.prime ? `<div class="prime-badge">&#10003; Prime 翌日配送無料</div>` : ''}
+      <button class="add-cart-btn${inCart?' added':''}" id="btn-${p.id}" onclick="event.stopPropagation();addToCart(${p.id})">
+        ${inCart ? '&#10003; カートに追加済み' : 'カートに追加'}
+      </button>
+    </div>`;
+  }).join('');
+}
+
+// ===== CART =====
+function addToCart(id) {
+  const product = [...products, ...saleProducts].find(p => p.id === id);
+  if (!product) return;
+  const existing = cart.find(c => c.id === id);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+  updateCartUI();
+  const btn = document.getElementById('btn-' + id);
+  if (btn) { btn.textContent = '✓ カートに追加済み'; btn.classList.add('added'); }
+  showToast(`「${product.name.slice(0,20)}...」をカートに追加しました`);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(c => c.id !== id);
+  const btn = document.getElementById('btn-' + id);
+  if (btn) { btn.textContent = 'カートに追加'; btn.classList.remove('added'); }
+  updateCartUI();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(c => c.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) removeFromCart(id);
+  else updateCartUI();
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s, c) => s + c.qty, 0);
+  document.getElementById('cart-count').textContent = total;
+
+  const itemsEl = document.getElementById('cart-items');
+  const footer = document.getElementById('cart-footer');
+
+  if (cart.length === 0) {
+    itemsEl.innerHTML = `<div class="cart-empty"><div class="empty-icon">&#128722;</div><div>カートは空です</div></div>`;
+    footer.style.display = 'none';
+    return;
+  }
+
+  footer.style.display = 'block';
+  const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  document.getElementById('cart-total').textContent = formatPrice(subtotal);
+
+  itemsEl.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-img">${item.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name.slice(0, 40)}...</div>
+        <div class="cart-item-price">${formatPrice(item.price)}</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-num">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        </div>
+        <div class="cart-item-remove" onclick="removeFromCart(${item.id})">削除</div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleCart() {
+  const panel = document.getElementById('cart-panel');
+  const bg = document.getElementById('overlay-bg');
+  const open = panel.classList.toggle('open');
+  bg.style.display = open ? 'block' : 'none';
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ===== HERO SLIDER =====
+let slideIdx = 0;
+const totalSlides = 3;
+
+function slide(dir) {
+  slideIdx = (slideIdx + dir + totalSlides) % totalSlides;
+  updateSlider();
+}
+
+function updateSlider() {
+  document.getElementById('hero-slides').style.transform = `translateX(-${slideIdx * 100}%)`;
+  document.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === slideIdx));
+}
+
+function initSlider() {
+  const dots = document.getElementById('hero-dots');
+  for (let i = 0; i < totalSlides; i++) {
+    const d = document.createElement('button');
+    d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+    d.onclick = () => { slideIdx = i; updateSlider(); };
+    dots.appendChild(d);
+  }
+  setInterval(() => slide(1), 4000);
+}
+
+// ===== INIT =====
+renderGrid('product-grid', products);
+renderGrid('sale-grid', saleProducts);
+initSlider();
+updateCartUI();
+</script>
+</body>
+</html>
